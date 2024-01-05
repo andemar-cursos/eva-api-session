@@ -1,5 +1,7 @@
 package com.pichincha.eva.session.controller;
 
+import com.pichincha.eva.session.exception.EmptyPasswordException;
+import com.pichincha.eva.session.exception.EmptyUserException;
 import com.pichincha.eva.session.service.dto.ClientJwtResponseDto;
 import com.pichincha.eva.session.service.dto.ClientLoginDto;
 import com.pichincha.eva.session.service.LoginService;
@@ -22,7 +24,8 @@ public class LoginController {
   private final LoginService loginService;
 
   @PostMapping("")
-  public ResponseEntity<ClientJwtResponseDto> loginClient(@RequestBody @Valid ClientLoginDto clientLogin) {
+  public ResponseEntity<ClientJwtResponseDto> loginClient(@RequestBody @Valid ClientLoginDto clientLogin)
+      throws EmptyUserException, EmptyPasswordException {
     log.info("Login | client: " + clientLogin.getUser());
     ClientJwtResponseDto response = loginService.login(clientLogin);
     log.info("Login successfully client: " + clientLogin.getUser());
